@@ -1,7 +1,4 @@
-package Entity;
-
-import DataStore.Data;
-import lombok.*;
+package entity;
 
 import java.util.List;
 import java.util.UUID;

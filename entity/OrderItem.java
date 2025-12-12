@@ -1,10 +1,4 @@
-package Entity;
-
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+package entity;
 
 
 public class OrderItem {

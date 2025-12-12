@@ -1,6 +1,6 @@
-package DataStore;
+package datastore;
 
-import Entity.*;
+import entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
