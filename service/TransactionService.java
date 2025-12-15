@@ -2,11 +2,12 @@ package service;
 
 import dao.ProductDao;
 import datastore.Data;
-import entity.Order;
-import entity.OrderItem;
-import entity.Transaction;
-import entity.User;
+import entity.*;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +32,47 @@ public class TransactionService {
                 Data.transactionList.add(tx1);
                 Data.users.add(u1);
                 Data.orderItemList.add(oi1);
+
+                try (FileOutputStream output = new FileOutputStream("Success.txt", true)) {
+
+                    Product p1 = ProductDao.getProduct(pid);
+
+                    String text =
+                                    "User Name   : " + u1.getUserName() + "\n" +
+                                    "Product     : " + p1.getName() + "\n" +
+                                    "Quantity    : " + quantity + "\n" +
+                                    "Order ID    : " + o1.getOrderId() + "\n" +
+                                    "Product ID  : " + pid + "\n" +
+                                    "Updated Quantity : " + p1.getQuantity() + "\n" + "\n";
+
+                    output.write(text.getBytes());
+
+                } catch (IOException e) {
+                    System.out.println("Error writing file");
+                    e.printStackTrace();
+                }
+
+
             } else {
+                try (FileOutputStream output = new FileOutputStream("Failure.txt", true)) {
+
+                    Product p1 = ProductDao.getProduct(pid);
+
+                    String text =
+                                    "User Name   : " + u1.getUserName() + "\n" +
+                                    "Product     : " + p1.getName() + "\n" +
+                                    "Quantity    : " + quantity + "\n" +
+                                    "Order ID    : " + o1.getOrderId() + "\n" +
+                                    "Product ID  : " + pid + "\n" +
+                                    "Original Quantity : " + p1.getQuantity() + "\n" + "\n";
+
+                    output.write(text.getBytes());
+
+                } catch (IOException e) {
+                    System.out.println("Error writing file");
+                    e.printStackTrace();
+                }
+
                 System.out.println("Transaction failed");
             }
         }else {
