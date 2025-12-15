@@ -9,50 +9,46 @@ import service.OrderProcessingService;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class OrderProcessor {
     public static void init(){
 
         List<UserOrderData> finalData = ConsoleInput.takeconsoleInput();
 
-        Thread t1 = new Thread(()->{
-            User u1 = finalData.get(0).getUser();
-            List<ProductSelection> ps1 = finalData.get(0).getSelections();
-            for(ProductSelection ps :ps1){
-                UUID id = ps.getPid();
-                int quantity = ps.getQuantity();
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-                OrderProcessingService obj = new OrderProcessingService();
-                obj.processOrder(u1,id,quantity);
+        for (UserOrderData data : finalData) {
 
-            }
-        });
+            executor.submit(() -> {
 
-        Thread t2 = new Thread(()->{
-            User u1 = finalData.get(1).getUser();
-            List<ProductSelection>ps1 = finalData.get(1).getSelections();
-            for(ProductSelection ps :ps1){
-                UUID id = ps.getPid();
-                int quantity = ps.getQuantity();
+                User u1 = data.getUser();
+                List<ProductSelection> selections = data.getSelections();
 
-                OrderProcessingService obj = new OrderProcessingService();
-                obj.processOrder(u1,id,quantity);
+                for (ProductSelection ps : selections) {
+                    UUID pid = ps.getPid();
+                    int quantity = ps.getQuantity();
 
-            }
-        });
-
-        t1.start();
-        t2.start();
-
-        try {
-            t1.join();
-            t2.join();
-        }catch (InterruptedException e){
-            System.out.println("Exception occurred in thread");
-
+                    OrderProcessingService service = new OrderProcessingService();
+                    service.processOrder(u1, pid, quantity);
+                }
+            });
         }
 
-        Data.printAll();
+        executor.shutdown();
+
+        try {
+            if (!executor.awaitTermination(5, TimeUnit.MINUTES)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+
+
 
     }
 }

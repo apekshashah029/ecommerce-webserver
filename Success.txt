@@ -1,14 +1,16 @@
-User Name   : Priya
+User Name   : Ruchi
+Product     : Oil
+Quantity    : 4
+Order ID    : d1f55e96-1400-4ec8-bb07-9466f95ca7df
+Product ID  : 9307e003-9321-490f-b1a8-30ca916d8ccb
+Total Price : 480
+Updated Quantity : 8
+
+User Name   : Arshi
 Product     : Oil
 Quantity    : 5
-Order ID    : 630cb761-a41b-436a-a503-1097bd821462
-Product ID  : f77dafb8-cbf6-454f-b52e-0cbd1bde56dc
-Updated Quantity : 7
-
-User Name   : Aditi
-Product     : Oil
-Quantity    : 3
-Order ID    : d78ba465-ee65-4972-bdce-a32a39350fe3
-Product ID  : f77dafb8-cbf6-454f-b52e-0cbd1bde56dc
-Updated Quantity : 4
+Order ID    : 2b146b4b-7bd8-49d2-8b55-1d1f2d68086f
+Product ID  : 9307e003-9321-490f-b1a8-30ca916d8ccb
+Total Price : 600
+Updated Quantity : 3
 

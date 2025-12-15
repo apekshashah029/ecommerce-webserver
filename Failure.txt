@@ -1,14 +1,8 @@
-User Name   : Aditi
+User Name   : Apeksha
 Product     : Oil
 Quantity    : 3
-Order ID    : 0dc57ca6-f15c-4d13-9073-07e0cc220732
-Product ID  : 3e027778-864c-41a8-a09e-01a1e1b97375
-Original Quantity : 12
-
-User Name   : Ayushi
-Product     : Oil
-Quantity    : 4
-Order ID    : fc7b7f7f-80d6-4d0d-aa21-392524457596
-Product ID  : 3e027778-864c-41a8-a09e-01a1e1b97375
+Order ID    : a6224431-a723-4232-80c5-932f85ee8107
+Product ID  : f10fbbe6-e7fe-427b-a2df-064170a2a734
+Total Price : 360
 Original Quantity : 12
 

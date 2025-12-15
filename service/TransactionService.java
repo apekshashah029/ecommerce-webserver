@@ -18,7 +18,7 @@ public class TransactionService {
         if(exist1) {
             System.out.println("Let's proceed for transaction: ");
 
-            Transaction tx1 = new Transaction(true, o1);
+            Transaction tx1 = new Transaction(false, o1);
 
             List<Transaction> txList = o1.getTransactionList();
             if (txList == null) txList = new ArrayList<>();
@@ -43,6 +43,7 @@ public class TransactionService {
                                     "Quantity    : " + quantity + "\n" +
                                     "Order ID    : " + o1.getOrderId() + "\n" +
                                     "Product ID  : " + pid + "\n" +
+                                    "Total Price : " + p1.getPrice()*quantity + "\n" +
                                     "Updated Quantity : " + p1.getQuantity() + "\n" + "\n";
 
                     output.write(text.getBytes());
@@ -64,6 +65,7 @@ public class TransactionService {
                                     "Quantity    : " + quantity + "\n" +
                                     "Order ID    : " + o1.getOrderId() + "\n" +
                                     "Product ID  : " + pid + "\n" +
+                                    "Total Price : " + p1.getPrice()*quantity + "\n" +
                                     "Original Quantity : " + p1.getQuantity() + "\n" + "\n";
 
                     output.write(text.getBytes());
