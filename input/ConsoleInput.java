@@ -1,6 +1,6 @@
 package input;
 
-import customException.InvalidUUIDException;
+import customException.InvalidFormatException;
 import dao.ProductSelection;
 import dao.UserOrderData;
 import datastore.Data;
@@ -50,8 +50,8 @@ public class ConsoleInput {
                 }
 
                 try{
-                    InvalidUUIDException.isValid(input);
-                }catch (InvalidUUIDException e){
+                    InvalidFormatException.isValid(input);
+                }catch (InvalidFormatException e){
                     System.out.println(e.getMessage());
                     continue;
                 }

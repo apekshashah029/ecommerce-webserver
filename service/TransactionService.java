@@ -29,6 +29,7 @@ public class TransactionService {
                 txList.add(tx1);
                 o1.setTransactionList(txList);
 
+                String fileName;
 
                 if (tx1.isStatus()) {
                     ProductDao.updateQuantity(pid, quantity);
@@ -37,20 +38,31 @@ public class TransactionService {
                     Data.users.add(u1);
                     Data.orderItemList.add(oi1);
 
-                    try {
-                        OutputStream.performWrite("Success.file", pid, quantity, u1, o1);
-                    } catch (FileWriteException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    fileName = "Success.txt";
 
                 } else {
-                    try {
-                        OutputStream.performWrite("Failure.file", pid, quantity, u1, o1);
-                    } catch (FileWriteException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    fileName = "Failure.txt";
                     System.out.println("Transaction failed");
                 }
+
+                Product p1 = ProductDao.getProduct(pid);
+
+                String text =
+                        "User Name   : " + u1.getUserName() + "\n" +
+                                "Product     : " + p1.getName() + "\n" +
+                                "Quantity    : " + quantity + "\n" +
+                                "Order ID    : " + o1.getOrderId() + "\n" +
+                                "Product ID  : " + pid + "\n" +
+                                "Total Price : " + p1.getPrice()*quantity + "\n" +
+                                "Updated Quantity : " + p1.getQuantity() + "\n" + "\n";
+
+                try {
+                    OutputStream.performWrite(fileName, text);
+                } catch (FileWriteException e) {
+                    System.out.println(e.getMessage());
+                }
+
+
             } else {
                 System.out.println("Error: Product quantity changed");
             }
