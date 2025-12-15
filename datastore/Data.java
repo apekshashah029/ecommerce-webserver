@@ -1,28 +1,34 @@
 package datastore;
 
 import entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Data {
+
     public static List<User> users = new ArrayList<>();
     public static List<Product> products = new ArrayList<>();
     public static List<Order> orders = new ArrayList<>();
     public static List<OrderItem> orderItemList = new ArrayList<>();
     public static List<Transaction> transactionList = new ArrayList<>();
+    private static final Logger logger = LoggerFactory.getLogger(Data.class);
 
     public void createData() {
 
+        logger.info("Initializing in-memory data");
+
         User u = new User("Apeksha");
-        User u1 = new User( "Ruchita");
+        User u1 = new User("Ruchita");
         User u2 = new User("Arshi");
-        User u3 = new User( "Helly");
+        User u3 = new User("Helly");
 
         Product p1 = new Product("Laptop", 50000, 4);
         Product p2 = new Product("Oil", 120, 12);
         Product p3 = new Product("Shuttle", 40, 3);
-        Product p4 = new Product("ball", 30, 12);
+        Product p4 = new Product("Ball", 30, 12);
 
         Order o1 = new Order(u);
         Order o2 = new Order(u);
@@ -63,86 +69,99 @@ public class Data {
         o3.setTransactionList(new ArrayList<>(List.of(tx4)));
 
         orders.addAll(List.of(o1, o2, o3));
-    }
 
+        logger.info("Data initialization completed successfully");
+    }
 
     public static void printAll() {
 
-        System.out.println("========== USERS ==========");
-        for (User u : Data.users) {
-            System.out.println("User ID: " + u.getUserId() + ", Name: " + u.getUserName());
+        logger.info("========== USERS ==========");
+        for (User u : users) {
+            logger.info("User ID: {}, Name: {}", u.getUserId(), u.getUserName());
 
             if (u.getOrders() != null) {
                 for (Order o : u.getOrders()) {
-                    System.out.println("   Order ID: " + o.getOrderId());
+                    logger.info("   Order ID: {}", o.getOrderId());
 
                     if (o.getOrderItemList() != null) {
                         for (OrderItem oi : o.getOrderItemList()) {
-                            System.out.println("      Product: " + oi.getProduct().getName() +
-                                    " (ID " + oi.getProduct().getProductId() + ")");
+                            logger.info(
+                                    "      Product: {} (ID {})",
+                                    oi.getProduct().getName(),
+                                    oi.getProduct().getProductId()
+                            );
                         }
                     }
 
                     if (o.getTransactionList() != null) {
                         for (Transaction t : o.getTransactionList()) {
-                            System.out.println("      Transaction ID: " + t.getTransactionId() +
-                                    ", Success: " + t.isStatus());
+                            logger.info(
+                                    "      Transaction ID: {}, Success: {}",
+                                    t.getTransactionId(),
+                                    t.isStatus()
+                            );
                         }
                     }
                 }
             }
         }
 
+        logger.info("========== PRODUCTS ==========");
+        for (Product p : products) {
+            logger.info(
+                    "Product ID: {}, Name: {}, Price: {}, Quantity: {}",
+                    p.getProductId(),
+                    p.getName(),
+                    p.getPrice(),
+                    p.getQuantity()
+            );
 
-        System.out.println("\n========== PRODUCTS ==========");
-        for (Product p : Data.products) {
-            System.out.println("Product ID: " + p.getProductId() +
-                    ", Name: " + p.getName() +
-                    ", Price: " + p.getPrice() +
-                    ", Quantity: " + p.getQuantity());
-
-            if (p.getOrderItemList() != null) {
-                System.out.println("   Ordered in these orders:");
+            if (p.getOrderItemList() != null && !p.getOrderItemList().isEmpty()) {
+                logger.info("   Ordered in these orders:");
                 for (OrderItem oi : p.getOrderItemList()) {
-                    System.out.println("      Order ID: " + oi.getOrder().getOrderId());
+                    logger.info("      Order ID: {}", oi.getOrder().getOrderId());
                 }
             }
         }
 
-
-        System.out.println("\n========== ORDERS ==========");
-        for (Order o : Data.orders) {
-            System.out.println("Order ID: " + o.getOrderId() +
-                    ", User: " + o.getUser().getUserName());
+        logger.info("========== ORDERS ==========");
+        for (Order o : orders) {
+            logger.info("Order ID: {}, User: {}", o.getOrderId(), o.getUser().getUserName());
 
             if (o.getOrderItemList() != null) {
                 for (OrderItem oi : o.getOrderItemList()) {
-                    System.out.println("   Product: " + oi.getProduct().getName());
+                    logger.info("   Product: {}", oi.getProduct().getName());
                 }
             }
 
             if (o.getTransactionList() != null) {
                 for (Transaction t : o.getTransactionList()) {
-                    System.out.println("   Transaction ID: " + t.getTransactionId() +
-                            ", Success: " + t.isStatus());
+                    logger.info(
+                            "   Transaction ID: {}, Success: {}",
+                            t.getTransactionId(),
+                            t.isStatus()
+                    );
                 }
             }
         }
 
-
-        System.out.println("\n========== TRANSACTIONS ==========");
-        for (Transaction t : Data.transactionList) {
-            System.out.println("Transaction ID: " + t.getTransactionId() +
-                    ", Order: " + t.getOrder().getOrderId() +
-                    ", Success: " + t.isStatus());
+        logger.info("========== TRANSACTIONS ==========");
+        for (Transaction t : transactionList) {
+            logger.info(
+                    "Transaction ID: {}, Order ID: {}, Success: {}",
+                    t.getTransactionId(),
+                    t.getOrder().getOrderId(),
+                    t.isStatus()
+            );
         }
 
-
-        System.out.println("\n========== ORDER ITEMS ==========");
-        for (OrderItem oi : Data.orderItemList) {
-            System.out.println("Order ID: " + oi.getOrder().getOrderId() +
-                    ", Product: " + oi.getProduct().getName());
+        logger.info("========== ORDER ITEMS ==========");
+        for (OrderItem oi : orderItemList) {
+            logger.info(
+                    "Order ID: {}, Product: {}",
+                    oi.getOrder().getOrderId(),
+                    oi.getProduct().getName()
+            );
         }
     }
-
 }

@@ -1,13 +1,11 @@
 package service;
 
+import customException.FileWriteException;
 import dao.ProductDao;
 import datastore.Data;
 import entity.*;
+import fileOperation.OutputStream;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,48 +31,18 @@ public class TransactionService {
                 Data.users.add(u1);
                 Data.orderItemList.add(oi1);
 
-                try (FileOutputStream output = new FileOutputStream("Success.txt", true)) {
-
-                    Product p1 = ProductDao.getProduct(pid);
-
-                    String text =
-                                    "User Name   : " + u1.getUserName() + "\n" +
-                                    "Product     : " + p1.getName() + "\n" +
-                                    "Quantity    : " + quantity + "\n" +
-                                    "Order ID    : " + o1.getOrderId() + "\n" +
-                                    "Product ID  : " + pid + "\n" +
-                                    "Total Price : " + p1.getPrice()*quantity + "\n" +
-                                    "Updated Quantity : " + p1.getQuantity() + "\n" + "\n";
-
-                    output.write(text.getBytes());
-
-                } catch (IOException e) {
-                    System.out.println("Error writing file");
-                    e.printStackTrace();
+                try {
+                    OutputStream.performWrite("Success.file",pid,quantity,u1,o1);
+                }catch (FileWriteException e){
+                    System.out.println(e.getMessage());
                 }
-
 
             } else {
-                try (FileOutputStream output = new FileOutputStream("Failure.txt", true)) {
-
-                    Product p1 = ProductDao.getProduct(pid);
-
-                    String text =
-                                    "User Name   : " + u1.getUserName() + "\n" +
-                                    "Product     : " + p1.getName() + "\n" +
-                                    "Quantity    : " + quantity + "\n" +
-                                    "Order ID    : " + o1.getOrderId() + "\n" +
-                                    "Product ID  : " + pid + "\n" +
-                                    "Total Price : " + p1.getPrice()*quantity + "\n" +
-                                    "Original Quantity : " + p1.getQuantity() + "\n" + "\n";
-
-                    output.write(text.getBytes());
-
-                } catch (IOException e) {
-                    System.out.println("Error writing file");
-                    e.printStackTrace();
+                try {
+                    OutputStream.performWrite("Failure.file",pid,quantity,u1,o1);
+                }catch (FileWriteException e){
+                    System.out.println(e.getMessage());
                 }
-
                 System.out.println("Transaction failed");
             }
         }else {

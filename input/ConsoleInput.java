@@ -1,5 +1,6 @@
 package input;
 
+import customException.InvalidUUIDException;
 import dao.ProductSelection;
 import dao.UserOrderData;
 import datastore.Data;
@@ -46,6 +47,13 @@ public class ConsoleInput {
 
                 if (input.equals("exit")) {
                     break;
+                }
+
+                try{
+                    InvalidUUIDException.isValid(input);
+                }catch (InvalidUUIDException e){
+                    System.out.println(e.getMessage());
+                    continue;
                 }
 
                 UUID pid = UUID.fromString(input);
