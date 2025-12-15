@@ -14,6 +14,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class OrderProcessor {
+    private static final OrderProcessingService orderService = new OrderProcessingService();
+
     public static void init(){
 
         List<UserOrderData> finalData = ConsoleInput.takeconsoleInput();
@@ -31,8 +33,7 @@ public class OrderProcessor {
                     UUID pid = ps.getPid();
                     int quantity = ps.getQuantity();
 
-                    OrderProcessingService service = new OrderProcessingService();
-                    service.processOrder(u1, pid, quantity);
+                    orderService.processOrder(u1, pid, quantity);
                 }
             });
         }
