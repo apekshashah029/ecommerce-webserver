@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Data {
 
@@ -15,6 +16,7 @@ public class Data {
     public static List<OrderItem> orderItemList = new ArrayList<>();
     public static List<Transaction> transactionList = new ArrayList<>();
     private static final Logger logger = LoggerFactory.getLogger(Data.class);
+    public static final ReentrantLock PRODUCT_LOCK = new ReentrantLock();         // reentrant lock
 
     public void createData() {
 

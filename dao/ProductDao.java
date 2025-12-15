@@ -18,7 +18,7 @@ public class ProductDao {
         return exist;
     }
 
-    synchronized public static void updateQuantity(UUID pid,int quantity){
+    public static void updateQuantity(UUID pid,int quantity){
         Product p = Data.products.stream()
                 .filter(p1 -> p1.getProductId().equals(pid))
                 .findFirst()
