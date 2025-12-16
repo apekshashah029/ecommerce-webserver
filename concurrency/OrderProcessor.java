@@ -7,6 +7,7 @@ import entity.User;
 import input.ConsoleInput;
 import service.OrderProcessingService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.*;
@@ -19,6 +20,8 @@ public class OrderProcessor {
         List<UserOrderData> finalData = ConsoleInput.takeconsoleInput();
 
         ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        List<Future<?>> futures = new ArrayList<>();
 
         for (UserOrderData data : finalData) {
 
@@ -35,6 +38,12 @@ public class OrderProcessor {
                 }
             });
 
+            futures.add(future);
+
+        }
+
+        for (Future<?> future : futures) {
+
             try {
                 // in execution if any exception is thrown then at that time exception won't be displayed on console
                 // because submit method wrap the exception and handle via ExecutionException
@@ -45,8 +54,8 @@ public class OrderProcessor {
             }catch (InterruptedException e){
                 Thread.currentThread().interrupt();
             }
-        }
 
+        }
         executor.shutdown();
 
         try {
