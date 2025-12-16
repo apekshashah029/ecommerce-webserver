@@ -8,12 +8,17 @@ import java.util.UUID;
 public class ProductDao {
     public static boolean checkProductQuantity(UUID pid, int quantity){
 
-        boolean exist = Data.mp.get(pid).getQuantity()>=quantity;
+        Product p = Data.mp.get(pid);
+        if (p == null) {
+            System.out.println("Product not found");
+            return false;
+        }
+        boolean exist = p.getQuantity() >= quantity;
 
         if(exist){
             System.out.println("Product exist");
         }else{
-            System.out.println("Product doesn't exist");
+            System.out.println("Insufficient Quantity");
         }
         return exist;
     }

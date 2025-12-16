@@ -9,9 +9,7 @@ import service.OrderProcessingService;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class OrderProcessor {
     private static final OrderProcessingService orderService = new OrderProcessingService();
@@ -24,7 +22,7 @@ public class OrderProcessor {
 
         for (UserOrderData data : finalData) {
 
-            executor.execute(() -> {
+            Future<?>future = executor.submit(() -> {
 
                 User u1 = data.getUser();
                 List<ProductSelection> selections = data.getSelections();
@@ -36,6 +34,17 @@ public class OrderProcessor {
                     orderService.processOrder(u1, pid, quantity);
                 }
             });
+
+            try {
+                // in execution if any exception is thrown then at that time exception won't be displayed on console
+                // because submit method wrap the exception and handle via ExecutionException
+                // so need to use future.get() for cause of exception
+                future.get();
+            }catch (ExecutionException e ){
+                System.out.println("Exception Occurred: "+e.getCause());
+            }catch (InterruptedException e){
+                Thread.currentThread().interrupt();
+            }
         }
 
         executor.shutdown();
