@@ -24,7 +24,7 @@ public class OrderProcessor {
 
         for (UserOrderData data : finalData) {
 
-            executor.submit(() -> {
+            executor.execute(() -> {
 
                 User u1 = data.getUser();
                 List<ProductSelection> selections = data.getSelections();
@@ -41,7 +41,7 @@ public class OrderProcessor {
         executor.shutdown();
 
         try {
-            if (!executor.awaitTermination(5, TimeUnit.MINUTES)) {
+            if (!executor.awaitTermination(45, TimeUnit.SECONDS)) {
                 executor.shutdownNow();
             }
         } catch (InterruptedException e) {

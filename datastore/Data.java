@@ -4,8 +4,7 @@ import entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Data {
@@ -15,6 +14,9 @@ public class Data {
     public static List<Order> orders = new ArrayList<>();
     public static List<OrderItem> orderItemList = new ArrayList<>();
     public static List<Transaction> transactionList = new ArrayList<>();
+
+    public static Map<UUID,Product>mp = new HashMap<>();
+
     private static final Logger logger = LoggerFactory.getLogger(Data.class);
     public static final ReentrantLock PRODUCT_LOCK = new ReentrantLock();         // reentrant lock
 
@@ -31,6 +33,7 @@ public class Data {
         Product p2 = new Product("Oil", 120, 12);
         Product p3 = new Product("Shuttle", 40, 3);
         Product p4 = new Product("Ball", 30, 12);
+
 
         Order o1 = new Order(u);
         Order o2 = new Order(u);
@@ -54,6 +57,14 @@ public class Data {
         p4.setOrderItemList(new ArrayList<>());
 
         products.addAll(List.of(p1, p2, p3, p4));
+
+        for(Product p:products){
+            mp.put(p.getProductId(),p);
+        }
+
+        for (Map.Entry<UUID, Product> entry : Data.mp.entrySet()) {
+            System.out.println("Key: " + entry.getKey());
+        }
 
         o1.setOrderItemList(new ArrayList<>(List.of(oi1, oi4)));
         o2.setOrderItemList(new ArrayList<>(List.of(oi2)));

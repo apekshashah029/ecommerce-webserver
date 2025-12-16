@@ -57,6 +57,14 @@ public class ConsoleInput {
                 }
 
                 UUID pid = UUID.fromString(input);
+                try {
+                    int originalQuantity = Data.mp.get(pid).getQuantity();
+
+                }catch (NullPointerException e){
+                    System.out.println("Please enter existing UUID");
+                    continue;
+                }
+
 
                 System.out.println("Enter Product quantity: ");
                 int quantity = Integer.parseInt(sc1.nextLine());
