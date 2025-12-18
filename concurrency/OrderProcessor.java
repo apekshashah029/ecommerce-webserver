@@ -58,16 +58,5 @@ public class OrderProcessor {
         }
         executor.shutdown();
 
-        try {
-            if (!executor.awaitTermination(45, TimeUnit.SECONDS)) {
-                executor.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            executor.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
-
-
-
     }
 }

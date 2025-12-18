@@ -20,7 +20,7 @@ public class Data {
     private static final Logger logger = LoggerFactory.getLogger(Data.class);
     public static final ReentrantLock PRODUCT_LOCK = new ReentrantLock();         // reentrant lock
 
-    public void createData() {
+    static  {
 
         logger.info("Initializing in-memory data");
 
@@ -86,9 +86,8 @@ public class Data {
         logger.info("Data initialization completed successfully");
     }
 
-    public static void printAll() {
-
-        logger.info("========== USERS ==========");
+    public static void printUsers(){
+        logger.info("\n"+"========== USERS ==========");
         for (User u : users) {
             logger.info("User ID: {}, Name: {}", u.getUserId(), u.getUserName());
 
@@ -118,8 +117,10 @@ public class Data {
                 }
             }
         }
+    }
 
-        logger.info("========== PRODUCTS ==========");
+    public static void printProducts(){
+        logger.info("\n"+"========== PRODUCTS ==========");
         for (Product p : products) {
             logger.info(
                     "Product ID: {}, Name: {}, Price: {}, Quantity: {}",
@@ -136,8 +137,11 @@ public class Data {
                 }
             }
         }
+    }
 
-        logger.info("========== ORDERS ==========");
+    public static void printOrders(){
+
+        logger.info("\n"+"========== ORDERS ==========");
         for (Order o : orders) {
             logger.info("Order ID: {}, User: {}", o.getOrderId(), o.getUser().getUserName());
 
@@ -158,7 +162,10 @@ public class Data {
             }
         }
 
-        logger.info("========== TRANSACTIONS ==========");
+    }
+
+    public static void printTransaction(){
+        logger.info("\n"+"========== TRANSACTIONS ==========");
         for (Transaction t : transactionList) {
             logger.info(
                     "Transaction ID: {}, Order ID: {}, Success: {}",
@@ -167,8 +174,10 @@ public class Data {
                     t.isStatus()
             );
         }
+    }
 
-        logger.info("========== ORDER ITEMS ==========");
+    public static void printOrderItems(){
+        logger.info("\n"+"========== ORDER ITEMS ==========");
         for (OrderItem oi : orderItemList) {
             logger.info(
                     "Order ID: {}, Product: {}",
@@ -176,5 +185,16 @@ public class Data {
                     oi.getProduct().getName()
             );
         }
+    }
+
+
+    public static void printAll() {
+
+        printUsers();
+        printProducts();
+        printOrders();
+        printOrderItems();
+        printTransaction();
+
     }
 }
